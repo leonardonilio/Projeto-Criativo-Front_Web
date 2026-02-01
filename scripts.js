@@ -9,33 +9,40 @@ let active = 0;
 const total = items.length
 let timer;
 
-function update(direction){
+function resetTimer() {
+    clearInterval(timer)
+    timer = setInterval(() => update(1), 5000)
+}
+function update(direction) {
     document.querySelector('.item.active').classList.remove('active')
-    dots.querySelector('.dot.active').classList.remove('active')
-    if(direction > 0){
+    document.querySelector('.dot.active').classList.remove('active')
+
+    if (direction >= 0) {
         active = active + 1
-        if(active == total){
+        if (active == total) {
             active = 0
         }
 
-    } else if(direction < 0){
+    } else if (direction < 0) {
         active = active - 1
 
-        if(active < 0){
-            active = total-1
+        if (active < 0) {
+            active = total - 1
         }
     }
-    items[active].classList.add(' active')
-    dots[active].classList.add(' active')
+    items[active].classList.add('active')
+    dots[active].classList.add('active')
 
+    numberIndicator.textContent = String(active + 1).padStart(2, '0')
+
+    resetTimer()
 }
+resetTimer()
 
-
-
-prevButton.addEventListener('click', () =>{
+prevButton.addEventListener('click', () => {
     update(-1)
 })
-nextButto.addEventListener('click', ()=> {
+nextButto.addEventListener('click', () => {
     update(1)
 
 })
